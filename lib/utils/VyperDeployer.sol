@@ -5,18 +5,18 @@ interface VM {
     function broadcast() external;
 }
 
-contract VyperDeployer {
+library VyperDeployer {
     address constant HEVM_ADDRESS =
         address(bytes20(uint160(uint256(keccak256("hevm cheat code")))));
 
-    VM vm = VM(HEVM_ADDRESS);
+    VM constant vm = VM(HEVM_ADDRESS);
 
     /// @notice Compiles a Vyper contract and returns the address that the contract was deployed to
     /// @param fileName The file name of the Vyper contract. 
     ///                 For example, the file name for "SimpleStore.vy" is "SimpleStore".
     /// @param broadcast - Whether or not to broadcast the transaction.
     /// @return deployedAddress The address that the contract was deployed to.
-    function deployContract(string memory fileName, bool broadcast) public returns (address) {
+    function deploy(string memory fileName, bool broadcast) public returns (address) {
         ///@notice create a list of strings with the commands necessary to compile Vyper contracts
         string[] memory cmds = new string[](2);
         cmds[0] = "vyper";
@@ -49,7 +49,7 @@ contract VyperDeployer {
     /// @param args The abi-encoded arguments for the constructor.
     /// @param broadcast Whether or not to broadcast the transaction.
     /// @return deployedAddress The address that the contract was deployed to.
-    function deployContract(string memory fileName, bytes calldata args, bool broadcast)
+    function deploy(string memory fileName, bytes calldata args, bool broadcast)
         public
         returns (address)
     {
