@@ -1,37 +1,33 @@
-# <h1 align="center"> Forge Template </h1>
+```
+ _    _                           ______                  _        _____                         _      
+| |  | |                         (____  \       _        | |      (____ \                       (_)_    
+| |  | |   _ ____   ____  ____    ____)  ) ____| |_  ____| | _     _   \ \ ____ ____   ___   ___ _| |_  
+ \ \/ / | | |  _ \ / _  )/ ___)  |  __  ( / _  |  _)/ ___) || \   | |   | / _  )  _ \ / _ \ /___) |  _) 
+  \  /| |_| | | | ( (/ /| |      | |__)  | ( | | |_( (___| | | |  | |__/ ( (/ /| | | | |_| |___ | | |__ 
+   \/  \__  | ||_/ \____)_|      |______/ \_||_|\___)____)_| |_|  |_____/ \____) ||_/ \___/(___/|_|\___)
+      (____/|_|                                                                |_|                      
+```
 
-**Template repository for getting started quickly with Foundry projects**
+**Optimized Batch Deposit contract using Vyper**
 
-![Github Actions](https://github.com/foundry-rs/forge-template/workflows/CI/badge.svg)
+## Requirements
+
+The following will need to be installed in order to use this project. Please follow the links and instructions.
+
+-   [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)  
+    -   You'll know you've done it right if you can run `git --version`
+-   [Foundry / Foundryup](https://github.com/gakonst/foundry)
+    -   This will install `forge`, `cast`, and `anvil`
+    -   You can test you've installed them right by running `forge --version` and get an output like: `forge 0.2.0 (92f8951 2022-08-06T00:09:32.96582Z)`
+    -   To get the latest of each, just run `foundryup`
+-   [Vyper Compiler](https://docs.vyperlang.org/en/stable/installing-vyper.html)
+    -    You'll know you've done it right if you can run `vyper --version` and get an output like: `0.3.9+commit.66b9670`
 
 ## Getting Started
 
-Click "Use this template" on [GitHub](https://github.com/foundry-rs/forge-template) to create a new repository with this repo as the initial state.
-
-Or, if your repo already exists, run:
 ```sh
-forge init
 forge build
 forge test
-```
-
-## Writing your first test
-
-All you need is to `import forge-std/Test.sol` and then inherit it from your test contract. Forge-std's Test contract comes with a pre-instatiated [cheatcodes environment](https://book.getfoundry.sh/cheatcodes/), the `vm`. It also has support for [ds-test](https://book.getfoundry.sh/reference/ds-test.html)-style logs and assertions. Finally, it supports Hardhat's [console.log](https://github.com/brockelmore/forge-std/blob/master/src/console.sol). The logging functionalities require `-vvvv`.
-
-```solidity
-pragma solidity 0.8.10;
-
-import "forge-std/Test.sol";
-
-contract ContractTest is Test {
-    function testExample() public {
-        vm.roll(100);
-        console.log(1);
-        emit log("hi");
-        assertTrue(true);
-    }
-}
 ```
 
 ## Development
