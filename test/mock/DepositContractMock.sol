@@ -102,8 +102,6 @@ contract DepositContract is IDeposit {
             )
         );
 
-        require(msg.value == 32 ether, "DepositContractMock: Only 32 eth deposits should be expected");
-
         if (dataRootCheck) {
             // Verify computed and expected deposit data roots match
             require(
