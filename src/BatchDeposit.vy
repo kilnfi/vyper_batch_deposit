@@ -1,10 +1,16 @@
 # @version ^0.3.6
 
-MAX_LEN: constant(uint256) = 400 # lower is more gas efficient, but less flexible
+# ██╗  ██╗██╗██╗     ███╗   ██╗
+# ██║ ██╔╝██║██║     ████╗  ██║
+# █████╔╝ ██║██║     ██╔██╗ ██║
+# ██╔═██╗ ██║██║     ██║╚██╗██║
+# ██║  ██╗██║███████╗██║ ╚████║
+# ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝
+
+MAX_LEN: constant(uint256) = 800 # lower is more gas efficient, but less flexible
 PUBLIC_KEY_LEN: constant(uint256) = 48
 WITHDRAWAL_CRED_LEN: constant(uint256) = 32
 SIGNATURE_LEN: constant(uint256) = 96
-DEPOSIT_ADDRESS: constant(address) = 0x00000000219ab540356cBB839Cbe05303d7705Fa
 
 depositAddress: immutable(address)
 
