@@ -30,9 +30,7 @@ contract BatchDepositTest is Test {
         vm.deal(staker, 1_000_000_000 ether);
 
         vm.etch(depositContractAddr, address(depositContract).code);
-
-        VyperDeployer vyperDeployer = new VyperDeployer();
-        batchDeposit = vyperDeployer.deploy("BatchDeposit", abi.encode(depositContractAddr), false);
+        batchDeposit = VyperDeployer.deploy("BatchDeposit", abi.encode(depositContractAddr), false);
     }
 
     /* ---------------------------------- tests --------------------------------- */
@@ -43,7 +41,7 @@ contract BatchDepositTest is Test {
 
     function testMaxBatchDeposit() public {
         vm.startPrank(staker);
-        performBatchDeposit(800);
+        performBatchDeposit(600);
         vm.stopPrank();
     }
 
@@ -62,7 +60,7 @@ contract BatchDepositTest is Test {
             deposit_data_root_arr[i] = deposit_data_root;
         }
 
-        IBatchDeposit(batchDeposit).batchDeposit(
+        IBatchDeposit(batchDeposit).batchDeposit{value: 32 ether * count}(
             concat_pubkeys,
             concat_withdrawal_credentials,
             concat_signatures,

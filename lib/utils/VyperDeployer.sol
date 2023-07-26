@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import {Vm} from "forge-std/Vm.sol";
 
-contract VyperDeployer {
+library VyperDeployer {
     Vm private constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
     
     /// @notice Compiles a Vyper contract and returns the address that the contract was deployed to

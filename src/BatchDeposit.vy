@@ -7,7 +7,7 @@
 # ██║  ██╗██║███████╗██║ ╚████║
 # ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝
 
-MAX_LEN: constant(uint256) = 800 # lower is more gas efficient, but less flexible
+MAX_LEN: constant(uint256) = 600 # lower is more gas efficient, but less flexible
 PUBLIC_KEY_LEN: constant(uint256) = 48
 WITHDRAWAL_CRED_LEN: constant(uint256) = 32
 SIGNATURE_LEN: constant(uint256) = 96
