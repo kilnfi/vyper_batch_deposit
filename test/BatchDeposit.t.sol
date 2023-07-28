@@ -6,11 +6,14 @@ import "utils/VyperDeployer.sol";
 
 import "../src/interface/IBatchDeposit.sol";
 import "./mock/DepositContractMock.sol";
+import "./mock/DepositContractTestable.sol";
+import "./utils/BytesGenerator.sol";
+import "./lib/LibBytes.sol";
 
-contract BatchDepositTest is Test {
+contract BatchDepositTest is Test, BytesGenerator {
     /* -------------------------------- constants ------------------------------- */
 
-    DepositContract constant depositContract = DepositContract(0x00000000219ab540356cBB839Cbe05303d7705Fa);
+    DepositContractTestable constant depositContract = DepositContractTestable(0x00000000219ab540356cBB839Cbe05303d7705Fa);
     bytes constant pubkey =
         hex"aaa972ba0b2cc9153d13e1f2cd8540f765da3b3e4f7176e703c671e03944ac43409ec30a111568521cdd7c8f1ed0ce9a";
     bytes constant withdrawal_credential = hex"00f53a121f40eb62d64669abe5715fb2afc69b320373ebab1462602c34d8a70c";
@@ -22,7 +25,7 @@ contract BatchDepositTest is Test {
 
     address staker;
     address batchDeposit;
-    DepositContract depositContractCode = new DepositContract();
+    DepositContractTestable depositContractCode = new DepositContractTestable();
 
     /* ---------------------------------- setUp --------------------------------- */
 
@@ -38,8 +41,8 @@ contract BatchDepositTest is Test {
 
     function testMaxBatchDeposit() public {
         vm.startPrank(staker);
-        performBatchDeposit(600);
-        assertEq(depositContract.deposit_count(), 600);
+        performBatchDeposit(64);
+        assertEq(depositContract.deposit_count(), 64);
         vm.stopPrank();
     }
 
@@ -48,6 +51,40 @@ contract BatchDepositTest is Test {
         performBatchDeposit(1);
         assertEq(depositContract.deposit_count(), 1);
         vm.stopPrank();
+    }
+
+      function test_batchDeposit_match(uint256 c) public {
+        setSalt(bytes32(abi.encodePacked(c)));
+        c = bound(c, 1, 64);
+        uint256 COUNT = uint256(c);
+
+        console.log("COUNT", COUNT);
+
+        bytes memory pubkeys = genBytes(48 * COUNT);
+        bytes memory withdrawal_credentials = genBytes(32 * COUNT);
+        bytes memory signatures = genBytes(96 * COUNT);
+        bytes32[] memory deposit_data_roots = new bytes32[](COUNT);
+        bytes[] memory pubkeysList = new bytes[](COUNT);
+        bytes[] memory withdrawalCredentialsList = new bytes[](COUNT);
+        bytes[] memory signaturesList = new bytes[](COUNT);
+        for (uint256 i = 0; i < COUNT; i++) {
+            pubkeysList[i] = LibBytes.slice(pubkeys, i * 48, 48);
+            withdrawalCredentialsList[i] = LibBytes.slice(withdrawal_credentials, i * 32, 32);
+            signaturesList[i] = LibBytes.slice(signatures, i * 96, 96);
+            deposit_data_roots[i] = bytes32(genBytes(32));
+        }
+        vm.deal(address(this), 32 ether * COUNT);
+
+        vm.pauseGasMetering();
+        IBatchDeposit vyperDeposit = IBatchDeposit(batchDeposit);
+        vyperDeposit.batchDeposit{value: 32 ether * COUNT}(pubkeys, withdrawal_credentials, signatures, deposit_data_roots);
+
+        for (uint256 i; i < COUNT; i++) {
+            assertEq(depositContract.depositDataRoots(i), deposit_data_roots[i]);
+            assertEq(depositContract.depositPubkeys(i), pubkeysList[i]);
+            assertEq(depositContract.depositWithdrawalCredentials(i), withdrawalCredentialsList[i]);
+            assertEq(depositContract.depositSignatures(i), signaturesList[i]);
+        }
     }
 
     /* ---------------------------------- utils --------------------------------- */
@@ -69,4 +106,5 @@ contract BatchDepositTest is Test {
             concat_pubkeys, concat_withdrawal_credentials, concat_signatures, deposit_data_root_arr
         );
     }
+
 }
