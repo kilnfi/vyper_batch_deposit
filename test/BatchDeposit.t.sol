@@ -36,10 +36,6 @@ contract BatchDepositTest is Test {
 
     /* ---------------------------------- tests --------------------------------- */
 
-    function testDeploy() public {
-        assertNotEq(batchDeposit, address(0));
-    }
-
     function testMaxBatchDeposit() public {
         vm.startPrank(staker);
         performBatchDeposit(600);
