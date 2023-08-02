@@ -15,4 +15,20 @@ interface IBatchDeposit {
         bytes calldata signatures,
         bytes32[] calldata deposit_data_roots
     ) external payable;
+
+    function batchDepositCustom(
+        bytes calldata pubkeys,
+        bytes calldata withdrawal_credentialss,
+        bytes calldata signatures,
+        bytes32[] calldata deposit_data_roots,
+        uint256 amount
+    ) external payable;
+
+    function bigBatchDepositCustom(
+        bytes calldata pubkeys,
+        bytes calldata withdrawal_credentialss,
+        bytes calldata signatures,
+        bytes32[] calldata deposit_data_roots,
+        uint256 amount
+    ) external payable;
 }
