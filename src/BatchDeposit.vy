@@ -65,6 +65,47 @@ def batchDeposit(publicKeys: Bytes[MAX_LEN*PUBLIC_KEY_LEN],
         wc += WITHDRAWAL_CRED_LEN
         sig += SIGNATURE_LEN
 
+@payable
+@external
+def batchDepositCustom(publicKeys: Bytes[MAX_LEN*PUBLIC_KEY_LEN],
+                withdrawalCreds: Bytes[MAX_LEN*WITHDRAWAL_CRED_LEN],
+                signatures: Bytes[MAX_LEN*SIGNATURE_LEN],
+                dataRoots:  DynArray[bytes32, MAX_LEN],
+                amountPerValidator: uint256) :
+    """
+    @notice Deposit up to 64 validators to the offical staking contract with a custom amount per validator
+    @dev Max of 64 validators to limit the gas overhead of bigger limits for smaller deposits
+    @dev This function is here for future proofing, but at deployment time 32 ETH is the max effective balance for a validator
+    @param pulbicKeys The public keys of the validators to deposit
+    @param withdrawalCreds The withdrawal credentials of the validators to deposit
+    @param signatures The signatures of the validators to deposit
+    @param dataRoots The data roots of the validators to deposit
+    """
+    assert len(publicKeys) % PUBLIC_KEY_LEN == 0
+    assert len(withdrawalCreds) % WITHDRAWAL_CRED_LEN == 0
+    assert len(signatures) % SIGNATURE_LEN == 0
+    l : uint256 = len(dataRoots)
+    assert l == len(publicKeys) / PUBLIC_KEY_LEN
+    assert l == len(withdrawalCreds) / WITHDRAWAL_CRED_LEN
+    assert l == len(signatures) / SIGNATURE_LEN
+    if amountPerValidator * l != msg.value:
+        raise "Incorrect amount sent"
+    pk : uint256 = 0
+    wc : uint256 = 0
+    sig : uint256 = 0
+    for dataRoot in dataRoots:
+        raw_call(
+        depositAddress,
+        _abi_encode(slice(publicKeys, pk, PUBLIC_KEY_LEN),
+                    slice(withdrawalCreds, wc, WITHDRAWAL_CRED_LEN),
+                    slice(signatures, sig, SIGNATURE_LEN),
+                    dataRoot,
+                    method_id=method_id("deposit(bytes,bytes,bytes,bytes32)")),
+        value= amountPerValidator,
+        revert_on_failure=True)
+        pk += PUBLIC_KEY_LEN
+        wc += WITHDRAWAL_CRED_LEN
+        sig += SIGNATURE_LEN
 
 @payable
 @external
@@ -99,6 +140,48 @@ def bigBatchDeposit(publicKeys: Bytes[BIG_MAX_LEN*PUBLIC_KEY_LEN],
                     dataRoot,
                     method_id=method_id("deposit(bytes,bytes,bytes,bytes32)")),
                     value= as_wei_value(32, "ether"),
+                    revert_on_failure=True)
+        pk += PUBLIC_KEY_LEN
+        wc += WITHDRAWAL_CRED_LEN
+        sig += SIGNATURE_LEN
+
+@payable
+@external
+def bigBatchDepositCustom(publicKeys: Bytes[BIG_MAX_LEN*PUBLIC_KEY_LEN],
+                withdrawalCreds: Bytes[BIG_MAX_LEN*WITHDRAWAL_CRED_LEN],
+                signatures: Bytes[BIG_MAX_LEN*SIGNATURE_LEN],
+                dataRoots: DynArray[bytes32, BIG_MAX_LEN],
+                amountPerValidator: uint256) :
+    """
+    @notice Deposit up to 512 validators to the offical staking contract
+    @notice This function should only be used for large deposits (>64 validators)
+    @dev This function is here for future proofing, but at deployment time 32 ETH is the max effective balance for a validator
+    @param pulbicKeys The public keys of the validators to deposit
+    @param withdrawalCreds The withdrawal credentials of the validators to deposit
+    @param signatures The signatures of the validators to deposit
+    @param dataRoots The data roots of the validators to deposit
+    """
+    assert len(publicKeys) % PUBLIC_KEY_LEN == 0
+    assert len(withdrawalCreds) % WITHDRAWAL_CRED_LEN == 0
+    assert len(signatures) % SIGNATURE_LEN == 0
+    l : uint256 = len(dataRoots)
+    assert l == len(publicKeys) / PUBLIC_KEY_LEN
+    assert l == len(withdrawalCreds) / WITHDRAWAL_CRED_LEN
+    assert l == len(signatures) / SIGNATURE_LEN
+    if amountPerValidator * l != msg.value:
+        raise "Incorrect amount sent"
+    pk : uint256 = 0
+    wc : uint256 = 0
+    sig : uint256 = 0
+    for dataRoot in dataRoots:
+        raw_call(
+        depositAddress,
+        _abi_encode(slice(publicKeys, pk, PUBLIC_KEY_LEN),
+                    slice(withdrawalCreds, wc, WITHDRAWAL_CRED_LEN),
+                    slice(signatures, sig, SIGNATURE_LEN),
+                    dataRoot,
+                    method_id=method_id("deposit(bytes,bytes,bytes,bytes32)")),
+                    value= amountPerValidator,
                     revert_on_failure=True)
         pk += PUBLIC_KEY_LEN
         wc += WITHDRAWAL_CRED_LEN
