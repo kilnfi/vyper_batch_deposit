@@ -41,13 +41,9 @@ def batchDeposit(publicKeys: Bytes[MAX_LEN*PUBLIC_KEY_LEN],
     @param signatures The signatures of the validators to deposit
     @param dataRoots The data roots of the validators to deposit
     """
-    assert len(publicKeys) % PUBLIC_KEY_LEN == 0
-    assert len(withdrawalCreds) % WITHDRAWAL_CRED_LEN == 0
-    assert len(signatures) % SIGNATURE_LEN == 0
-    l : uint256 = len(dataRoots)
-    assert l == len(publicKeys) / PUBLIC_KEY_LEN
-    assert l == len(withdrawalCreds) / WITHDRAWAL_CRED_LEN
-    assert l == len(signatures) / SIGNATURE_LEN
+    assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
+    assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
+    assert len(signatures) == len(dataRoots) * SIGNATURE_LEN
     pk : uint256 = 0
     wc : uint256 = 0
     sig : uint256 = 0
@@ -81,14 +77,10 @@ def batchDepositCustom(publicKeys: Bytes[MAX_LEN*PUBLIC_KEY_LEN],
     @param signatures The signatures of the validators to deposit
     @param dataRoots The data roots of the validators to deposit
     """
-    assert len(publicKeys) % PUBLIC_KEY_LEN == 0
-    assert len(withdrawalCreds) % WITHDRAWAL_CRED_LEN == 0
-    assert len(signatures) % SIGNATURE_LEN == 0
-    l : uint256 = len(dataRoots)
-    assert l == len(publicKeys) / PUBLIC_KEY_LEN
-    assert l == len(withdrawalCreds) / WITHDRAWAL_CRED_LEN
-    assert l == len(signatures) / SIGNATURE_LEN
-    if amountPerValidator * l != msg.value:
+    assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
+    assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
+    assert len(signatures) == len(dataRoots) * SIGNATURE_LEN
+    if amountPerValidator * len(dataRoots) != msg.value:
         raise "Incorrect amount sent"
     pk : uint256 = 0
     wc : uint256 = 0
@@ -121,13 +113,9 @@ def bigBatchDeposit(publicKeys: Bytes[BIG_MAX_LEN*PUBLIC_KEY_LEN],
     @param signatures The signatures of the validators to deposit
     @param dataRoots The data roots of the validators to deposit
     """
-    assert len(publicKeys) % PUBLIC_KEY_LEN == 0
-    assert len(withdrawalCreds) % WITHDRAWAL_CRED_LEN == 0
-    assert len(signatures) % SIGNATURE_LEN == 0
-    l : uint256 = len(dataRoots)
-    assert l == len(publicKeys) / PUBLIC_KEY_LEN
-    assert l == len(withdrawalCreds) / WITHDRAWAL_CRED_LEN
-    assert l == len(signatures) / SIGNATURE_LEN
+    assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
+    assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
+    assert len(signatures) == len(dataRoots) * SIGNATURE_LEN
     pk : uint256 = 0
     wc : uint256 = 0
     sig : uint256 = 0
@@ -161,14 +149,10 @@ def bigBatchDepositCustom(publicKeys: Bytes[BIG_MAX_LEN*PUBLIC_KEY_LEN],
     @param signatures The signatures of the validators to deposit
     @param dataRoots The data roots of the validators to deposit
     """
-    assert len(publicKeys) % PUBLIC_KEY_LEN == 0
-    assert len(withdrawalCreds) % WITHDRAWAL_CRED_LEN == 0
-    assert len(signatures) % SIGNATURE_LEN == 0
-    l : uint256 = len(dataRoots)
-    assert l == len(publicKeys) / PUBLIC_KEY_LEN
-    assert l == len(withdrawalCreds) / WITHDRAWAL_CRED_LEN
-    assert l == len(signatures) / SIGNATURE_LEN
-    if amountPerValidator * l != msg.value:
+    assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
+    assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
+    assert len(signatures) == len(dataRoots) * SIGNATURE_LEN
+    if amountPerValidator * len(dataRoots) != msg.value:
         raise "Incorrect amount sent"
     pk : uint256 = 0
     wc : uint256 = 0
