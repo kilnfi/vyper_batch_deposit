@@ -88,6 +88,7 @@ def batchDepositCustom(
     @param withdrawalCreds The withdrawal credentials of the validators to deposit
     @param signatures The signatures of the validators to deposit
     @param dataRoots The data roots of the validators to deposit
+    @param amountPerValidator The amount of ETH to stake per validator
     """
     assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
     assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
@@ -174,6 +175,7 @@ def bigBatchDepositCustom(
     @param withdrawalCreds The withdrawal credentials of the validators to deposit
     @param signatures The signatures of the validators to deposit
     @param dataRoots The data roots of the validators to deposit
+    @param amountPerValidator The amount of ETH to stake per validator
     """
     assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
     assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
