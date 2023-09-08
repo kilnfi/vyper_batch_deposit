@@ -44,6 +44,8 @@ def batchDeposit(publicKeys: Bytes[MAX_LEN*PUBLIC_KEY_LEN],
     assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
     assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
     assert len(signatures) == len(dataRoots) * SIGNATURE_LEN
+    if as_wei_value(32, "ether") * len(dataRoots) != msg.value:
+        raise "Incorrect amount sent"
     pk : uint256 = 0
     wc : uint256 = 0
     sig : uint256 = 0
@@ -116,6 +118,8 @@ def bigBatchDeposit(publicKeys: Bytes[BIG_MAX_LEN*PUBLIC_KEY_LEN],
     assert len(publicKeys) == len(dataRoots) * PUBLIC_KEY_LEN
     assert len(withdrawalCreds) == len(dataRoots) * WITHDRAWAL_CRED_LEN
     assert len(signatures) == len(dataRoots) * SIGNATURE_LEN
+    if as_wei_value(32, "ether") * len(dataRoots) != msg.value:
+        raise "Incorrect amount sent"
     pk : uint256 = 0
     wc : uint256 = 0
     sig : uint256 = 0
