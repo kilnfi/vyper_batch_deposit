@@ -30,6 +30,28 @@ forge build
 forge test
 ```
 
+## Deploying
+
+Use the script corresponding to the network you want to deploy to. For example, to deploy to Goerli:
+
+```sh
+forge script script/Deploy.goerli.s.sol --ffi --rpc-url <RPC> --broadcast --private-key <PRIVATE_KEY>
+```
+
+## Deployed Contracts
+
+### Mainnet
+
+`0x043a4073d9e8b509E5e7D1F928b4062895B802B0`
+
+### Goerli
+
+`0xDB325757C99b18a591592414Cd4e3E3681856F48`
+
+### Holesky
+
+Coming soon
+
 ## Development
 
 This project uses [Foundry](https://getfoundry.sh). See the [book](https://book.getfoundry.sh/getting-started/installation.html) for instructions on how to install and use Foundry.
