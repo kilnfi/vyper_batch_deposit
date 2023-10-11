@@ -1,6 +1,6 @@
 benchmark:
 	sh script/benchmark.sh
 
-tests :
+tests:
 	forge test --ffi -vvv --via-ir
 	

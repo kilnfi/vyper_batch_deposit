@@ -89,7 +89,7 @@ contract Benchmark is Script {
             // Vyper Deposit
             console.log("Vyper Deposit...");
             vm.startBroadcast();
-            IBatchDeposit(vyperBatchDeposit).bigBatchDeposit{value: 32 ether * count}(
+            IBatchDeposit(vyperBatchDeposit).bigBatchDeposit{value: 32 ether * secondCount}(
                 concat_pubkeys, concat_withdrawal_credentials, concat_signatures, deposit_data_roots
             );
             vm.stopBroadcast();
@@ -100,7 +100,7 @@ contract Benchmark is Script {
             // Vyper Deposit
             console.log("Vyper Small Deposit...");
             vm.startBroadcast();
-            IBatchDeposit(vyperBatchDeposit).batchDeposit{value: 32 ether * count}(
+            IBatchDeposit(vyperBatchDeposit).batchDeposit{value: 32 ether * secondCount}(
                 concat_pubkeys, concat_withdrawal_credentials, concat_signatures, deposit_data_roots
             );
             vm.stopBroadcast();

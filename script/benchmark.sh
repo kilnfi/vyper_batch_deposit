@@ -22,7 +22,7 @@ run_benchmark() {
     echo
 
     # Run benchmark
-    forge script Benchmark --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast --skip-simulation --slow --ffi
+    forge script Benchmark --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast --skip-simulation --slow --ffi --via-ir
     
     printf "Last block-number: "
     cast block-number --rpc-url http://localhost:8545   
