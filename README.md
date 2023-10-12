@@ -42,15 +42,15 @@ forge script script/Deploy.goerli.s.sol --ffi --rpc-url <RPC> --broadcast --priv
 
 ### Mainnet
 
-`0x043a4073d9e8b509E5e7D1F928b4062895B802B0`
+`0x576834cB068e677db4aFF6ca245c7bde16C3867e` compiled with Vyper 0.3.10
 
 ### Goerli
 
-`0xDB325757C99b18a591592414Cd4e3E3681856F48`
+`0x207E47ffD46f91eA971a4ee53647F55804Dc6ad0` compiled with Vyper 0.3.10
 
 ### Holesky
 
-Coming soon
+`0x0866af1D55bb1e9c2f63b1977926276F8d51b806` compiled with vyper 0.3.10
 
 ## Development
 

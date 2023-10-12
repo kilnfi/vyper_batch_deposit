@@ -1,14 +1,13 @@
 pragma solidity ^0.8.15;
 
-import "forge-std/Script.sol";
-import "../lib/utils/VyperDeployer.sol";
+import "./VyperScript.s.sol";
 
-contract MainnetDeploy is Script {
+contract MainnetDeploy is VyperScript {
     address MAINNET_DEPOSIT_CONTRACT = 0x00000000219ab540356cBB839Cbe05303d7705Fa;
 
     function run() external {
         address vyperBatchDeposit =
-            VyperDeployer.deploy("BatchDeposit", abi.encode(MAINNET_DEPOSIT_CONTRACT), true);
+            deploy("BatchDeposit", abi.encode(MAINNET_DEPOSIT_CONTRACT), true);
         console.log("VyperBatchDeposit: ", vyperBatchDeposit);
     }
 }
